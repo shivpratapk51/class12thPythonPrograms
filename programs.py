@@ -1,8 +1,10 @@
+import json
 import random
+import string
 import requests as r
 from dotenv import load_dotenv
 import os
-import json
+import cv2
 load_dotenv()
 
 def factorial(num):
@@ -111,8 +113,142 @@ def getWeatherData(city:str):
     return str
 
 
-    
-    
-   
+def readFile(path:str, mode:str):
+    fileHandler = open(path,mode)
+    data = fileHandler.read()
+    print(data)
+    fileHandler.close()
 
+# readFile("hii.txt","r")
+
+# def openCV():
+#     face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+#     webcam = cv2.VideoCapture(0)  # 0 for webcam, or use 'video.mp4'
+
+#     while True:
+#         _,img = webcam.read()
+#         cv2.imshow("Face Detection",img)
+#         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#         faces = face_cascade.detectMultiScale(gray,1.5, 4)
+#         for(x,y,w,h)in faces:
+#             cv2.rectangle(img, (x,y), ())
+#         key = cv2.waitKey(10)
+#         if key ==27:
+#             break
+#     webcam.release()
+#     cv2.destroyAllWindows()
+    
+# openCV()
+    
+    
+def countLinesWithSpecificWord(word:str , fileName:str):
+    fileHandler = open(fileName,"r")
+    strList  = fileHandler.readlines()
+    count = 0
+    def check(wordList):
+        for i in wordList:
+            if i == word.upper() or i == word.lower() or i == word.capitalize():
+                return True
+    for i in strList:
+        wordList = i.split()
+        if check(wordList):
+            count +=1       
+    print(count)
+
+countLinesWithSpecificWord("it","start.txt")
+
+def countWord(word:str,fileName:str):
+    fileHandler = open(fileName,"r")
+    
+    #Method 1 -->>
+        #data = fileHandler.read()
+        # wordList = data.split()
+        # count = 0
+        # for i in wordList:
+        #      if i == word.upper() or i == word.lower() or i == word.capitalize():
+        #          count +=1
+        # print(count)
+        
+        
+    #Method 2 -->>
+        # str = " "
+        # count = 0
+        # while str:
+        #     str = fileHandler.readline()
+        #     wordList = str.split()
+        #     for i in wordList:
+        #            if i == word.upper() or i == word.lower() or i == word.capitalize():
+        #               count +=1
+        # print(count)
+        
+        
+        
+    #Method 3 -->>
+    lineList = fileHandler.readlines()
+    count = 0
+    for i in lineList:
+        wordList = i.split()
+        for j in wordList:
+            if j == word.upper() or j == word.lower() or j == word.capitalize():
+                       count +=1
+    print(count)
+ 
+ 
+ 
+ 
+  
+    
+
+def countVowelsAndConsonant(fileName:str):
+    fileHandler = open(fileName, "r")
+    data  = fileHandler.read()
+    def charList(data:str):
+        charList = []
+        wtSpaceStr = data.replace(" ","")
+        for i in wtSpaceStr:
+            charList.append(i)
+        return charList
+    vowelList = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+    consonantList = [c for c in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' if c.lower() not in 'aeiou']
+    def specialChar():
+        listSpecialChar = list(string.punctuation)
+        for i in ["â","€","”","™"]:
+            listSpecialChar.append(i)
+        return listSpecialChar
+    specialCharList =specialChar()
+    whiteSpaceChar = list(string.whitespace)
+    numberList = ["0","1","2","3","4","5","6","7","8","9"]
+    countVowel = 0
+    countConsonant = 0
+    countSpecialChar = 0
+    countWhiteSpace = 0
+    countNumber =0
+    for i in charList(data):
+        if i in vowelList:
+            countVowel += 1
+        elif i in consonantList:
+            countConsonant +=1
+        elif i in specialCharList:
+            countSpecialChar +=1
+        elif i in whiteSpaceChar:
+            countWhiteSpace += 1
+        elif i in numberList:
+            countNumber +=1
+        else:
+            print(f"Error in ${i}")
+    
+        
+    detail = {
+        "Vowels":countVowel,
+        "Consonants":countConsonant,
+        "SpecialCharacters":countSpecialChar,
+        "WhitespaceCharacters":countWhiteSpace,
+        "Numbers":countNumber
+    }
+    jsonData = json.dumps(detail)
+    return jsonData
+
+detail =countVowelsAndConsonant("start.txt")
+
+T-9[-E0]]=0E0S0EW-RW[9WOWORP[=-NB9E0-L]]
 
